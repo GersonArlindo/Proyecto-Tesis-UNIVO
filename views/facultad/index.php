@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ],
                 ],
-                [
+               /* [
                     'class' => 'kartik\grid\DataColumn',
                     'attribute' => 'fac_fecha_ing',
                     'headerOptions' => ['class' => 'kv-sticky-column'],
@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'todayHighlight' => true,
                         ],
                     ]),
-                ],
+                ],*/
                 [
                     'class' => 'kartik\grid\ActionColumn',
                     'urlCreator' => function ($action, FacFacultad $model, $key, $index, $column) {
