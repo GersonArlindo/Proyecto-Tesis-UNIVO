@@ -1,7 +1,9 @@
 <?php
 Yii::$app->language = 'es_ES';
 
-use app\models\CarCarrera;
+
+
+use app\models\TinTipoInvestigacion;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
@@ -12,7 +14,7 @@ use kartik\export\ExportMenu;
 /* @var $searchModel backend\models\OsigSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Listado de Carreras';
+$this->title = 'Tipos de Investigación';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
@@ -38,23 +40,23 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => 'raw',
                     'vAlign' => 'middle',
                     'hAlign' => 'center',
-                    'attribute' => 'car_codigo',
+                    'attribute' => 'tin_codigo',
                     'value' => function ($model, $key, $index, $widget) {
-                        return Html::tag('span', $model->car_codigo, ['class' => 'badge bg-purple']);
+                        return Html::tag('span', $model->tin_codigo, ['class' => 'badge bg-purple']);
                     },
                     'filter' => false,
                 ],
                 [
                     'class' => 'kartik\grid\DataColumn',
                     'width' => '300px',
-                    'attribute' => 'car_nombre',
+                    'attribute' => 'tin_nombre',
                     'vAlign' => 'middle',
                     'format' => 'html',
                     'value' => function ($model, $key, $index, $widget) {
-                        return Html::a($model->car_nombre,  ['view', 'car_codigo' => $model->car_codigo]);
+                        return Html::a($model->tin_nombre,  ['view', 'tin_codigo' => $model->tin_codigo]);
                     },
                     'filterType' => GridView::FILTER_SELECT2,
-                    'filter' => ArrayHelper::map(CarCarrera::find()->orderBy('car_nombre')->all(), 'car_nombre', 'car_nombre'),
+                    'filter' => ArrayHelper::map(TinTipoInvestigacion::find()->orderBy('tin_nombre')->all(), 'tin_nombre', 'tin_nombre'),
                     'filterWidgetOptions' => [
                         'options' => ['placeholder' => 'Todos...'],
                         'pluginOptions' => [
@@ -62,28 +64,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ],
                 ],
-                [
+                /*[
                     'class' => 'kartik\grid\DataColumn',
-                    'width' => '300px',
-                    'attribute' => 'car_codfac',
-                    'vAlign' => 'middle',
-                    'format' => 'html',
-                    'value' => function ($model, $key, $index, $widget) {
-                        return Html::a($model->car_codfac,  ['view', 'car_codfac' => $model->car_codfac]);
-                    },
-                    'filterType' => GridView::FILTER_SELECT2,
-                    'filter' => ArrayHelper::map(CarCarrera::find()->orderBy('car_codfac')->all(), 'car_codfac', 'car_codfac'),
-                    'filterWidgetOptions' => [
-                        'options' => ['placeholder' => 'Todos...'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ],
-                ],
-               
-               /* [
-                    'class' => 'kartik\grid\DataColumn',
-                    'attribute' => 'car_fecha_ing',
+                    'attribute' => 'tes_fecha_ing',
                     'headerOptions' => ['class' => 'kv-sticky-column'],
                     'contentOptions' => ['class' => 'kv-sticky-column'],
                     'vAlign' => 'middle',
@@ -92,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'filterType' => GridView::FILTER_DATE,
                     'filterWidgetOptions' => ([
                         'model' => $dataProvider,
-                        'attribute' => 'car_fecha_ing',
+                        'attribute' => 'tes_fecha_ing',
                         'convertFormat' => true,
                         'pluginOptions' => [
                             'format' => 'yyyy-M-dd',
@@ -104,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'class' => 'kartik\grid\DataColumn',
-                    'attribute' => 'car_fecha_mod',
+                    'attribute' => 'tes_fecha_mod',
                     'headerOptions' => ['class' => 'kv-sticky-column'],
                     'contentOptions' => ['class' => 'kv-sticky-column'],
                     'vAlign' => 'middle',
@@ -113,7 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'filterType' => GridView::FILTER_DATE,
                     'filterWidgetOptions' => ([
                         'model' => $dataProvider,
-                        'attribute' => 'car_fecha_mod',
+                        'attribute' => 'tes_fecha_mod',
                         'convertFormat' => true,
                         'pluginOptions' => [
                             'format' => 'yyyy-M-dd',
@@ -125,8 +108,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],*/
                 [
                     'class' => 'kartik\grid\ActionColumn',
-                    'urlCreator' => function ($action, CarCarrera $model, $key, $index, $column) {
-                        return Url::toRoute([$action, 'car_codigo' => $model->car_codigo]);
+                    'urlCreator' => function ($action, TinTipoInvestigacion $model, $key, $index, $column) {
+                        return Url::toRoute([$action, 'tin_codigo' => $model->tin_codigo]);
                      }
                 ],
             ];
@@ -142,7 +125,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
             echo GridView::widget([
-                'id' => 'kv-carrera',
+                'id' => 'kv-tin-tipo-investigacion',
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => $gridColumns,
@@ -180,7 +163,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'showPageSummary'=>$pageSummary,
                 'panel' => [
                     'type' => GridView::TYPE_PRIMARY,
-                    'heading' => 'Carreras',
+                    'heading' => 'Tipos de Investigacion',
                 ],
                 'persistResize' => false,
             ]);
