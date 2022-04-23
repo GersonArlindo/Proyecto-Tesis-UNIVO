@@ -75,7 +75,7 @@ use yii\helpers\Url;
                 <!------- END TEMA DE TESIS ------->
 
                 <!------- ASESORES ------->
-                <?php if (Yii::$app->controller->id == 'asesor' && in_array(\Yii::$app->controller->action->id, ['index'])) {
+                <?php if (Yii::$app->controller->id == 'asesores' && in_array(\Yii::$app->controller->action->id, ['index'])) {
                     $li = "nav-item active";
                     $a = "nav-link active";
                 } else {
@@ -83,7 +83,7 @@ use yii\helpers\Url;
                     $a = "nav-link";
                 }
                 ?>
-                <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/asesor/index']); ?>"><i class="nav-icon fa fa-user"></i>
+                <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/asesores/index']); ?>"><i class="nav-icon fa fa-user"></i>
                         <p>Asesores</p>
                     </a></li>
                 <!------- END ASESORES ------->
