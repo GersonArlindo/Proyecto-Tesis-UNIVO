@@ -47,7 +47,7 @@ use yii\helpers\Url;
                 <!------- END DASHBOARD ------->
 
                 <!------- ESTUDIANTES ------->
-                <?php if (Yii::$app->controller->id == 'estudiante' && in_array(\Yii::$app->controller->action->id, ['index'])) {
+                <?php if (Yii::$app->controller->id == 'alumnos' && in_array(\Yii::$app->controller->action->id, ['index'])) {
                     $li = "nav-item active";
                     $a = "nav-link active";
                 } else {
@@ -55,7 +55,7 @@ use yii\helpers\Url;
                     $a = "nav-link";
                 }
                 ?>
-                <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/estudiante/index']); ?>"><i class="nav-icon fa fa-graduation-cap"></i>
+                <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/alumnos/index']); ?>"><i class="nav-icon fa fa-graduation-cap"></i>
                         <p>Estudiantes</p>
                     </a></li>
                 <!------- END ESTUDIANTES ------->
