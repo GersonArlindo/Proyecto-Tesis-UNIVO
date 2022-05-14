@@ -18,10 +18,6 @@ use yii\helpers\Html;
             <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_HORIZONTAL]); ?>
             <div class="card-body">
                 <form role="form">
-
-
-                <?= $form->field($model, 'jur_codigo')->hiddenInput()->label(false) ?>
-
                     <div class="row">
                         <div class="col-md-6">
                             <?= Html::activeLabel($model, 'jur_nombres', ['class' => 'control-label']) ?>

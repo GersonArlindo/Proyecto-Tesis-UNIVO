@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\TesTesis */
 
-$this->title = 'Actualizar Tema de Tesis ' . $model->tes_codigo;
-$this->params['breadcrumbs'][] = ['label' => 'Temas de Tesis', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->tes_codigo, 'url' => ['view', 'tes_codigo' => $model->tes_codigo]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Actualizar registro';
+$this->params['breadcrumbs'][] = ['label' => 'Listado', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Detalle', 'url' => ['view', 'tes_codigo' => $model->tes_codigo]];
+$this->params['breadcrumbs'][] = 'Actualizar';
 ?>
 <div class="tes-tesis-update">
 

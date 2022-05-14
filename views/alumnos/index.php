@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'hAlign' => 'center',
                     'attribute' => 'alm_codigo',
                     'value' => function ($model, $key, $index, $widget) {
-                        return Html::tag('span', $model->alm_codigo, ['class' => 'badge bg-purple']);
+                        return Html::tag('span', 'AL- '.$model->alm_codigo, ['class' => 'badge bg-purple']);
                     },
                     'filter' => false,
                 ],

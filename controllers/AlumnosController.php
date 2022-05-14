@@ -74,6 +74,7 @@ class AlumnosController extends Controller
         if ($model->load($this->request->post())) {
             $transaction = Yii::$app->db->beginTransaction();
             try {
+                $model->alm_codigo = $this->CreateCode();
                 $model->alm_fecha_ing = date('Y-m-d H:i:s');
                 $model->alm_fecha_mod = date('Y-m-d H:i:s');
                 $model->alm_codusr = \Yii::$app->user->identity->id;
@@ -96,6 +97,34 @@ class AlumnosController extends Controller
         }
     }
 
+//FUNCION PARA CREAR ID DE ALUMNOS
+    function CreateCode()
+    {
+        $estudiante = AlmAlumnos::find()->orderBy(['alm_codigo' => SORT_DESC])->one();
+        if (empty($estudiante->alm_codigo)) $codigo = 0;
+        else $codigo = $estudiante->alm_codigo;
+
+        $int = intval(preg_replace('/[^0-9]+/', '', $codigo), 10);
+        $id = $int + 1;
+
+        $numero = $id;
+        $tmp = "";
+        if ($id < 10) {
+            $tmp .= "000";
+            $tmp .= $id;
+        } elseif ($id >= 10 && $id < 100) {
+            $tmp .= "00";
+            $tmp .= $id;
+        } elseif ($id >= 100 && $id < 1000) {
+            $tmp .= "0";
+            $tmp .= $id;
+        } else {
+            $tmp .= $id;
+        }
+        $result = str_replace($id, $tmp, $numero);
+        return $result;
+    }
+    
     /**
      * Updates an existing AlmAlumnos model.
      * If update is successful, the browser will be redirected to the 'view' page.

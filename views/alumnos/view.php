@@ -25,22 +25,21 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td width="34%"> <?= $model->almCodcil->cil_nombre ?></td>
                     </tr>
                     <tr>
-                        <td width="16%"><b>Nombre:</b></td>
-                        <td width="34%"><?= $model->alm_nombres ?></td>
-                        <td width="16%"><b>Apellido:</b></td>
-                        <td width="34%"> <?= $model->alm_apellidos ?></td>
-                        <td width="16%"><b>Año:</b></td>
-                        <td width="34%"> <?= $model->alm_anio ?></td>
+                        <td ><b>Nombre:</b></td>
+                        <td ><?= $model->alm_nombres ?></td>
+                        <td ><b>Apellido:</b></td>
+                        <td > <?= $model->alm_apellidos ?></td>
+                        <td ><b>Año:</b></td>
+                        <td > <?= $model->alm_anio ?></td>
                     </tr>
                     <tr> 
-                        <td width="16%"><b>Telefono:</b></td>
-                        <td width="34%"><?= $model->alm_telefono ?></td>
-                        <td width="16%"><b>Email:</b></td>
-                        <td width="34%"> <?= $model->alm_email ?></td>
-                    </tr>
+                        <td><b>Telefono:</b></td>
+                        <td ><?= $model->alm_telefono ?></td>
+                        <td ><b>Email:</b></td>
+                        <td><?= '<a href="mailto:'.$model->alm_email.'">'.$model->alm_email . '</a>' ?></td>                    </tr>
                     <tr>
-                        <td width="16%"><b>Email:</b></td>
-                        <td width="34%"> <?= $model->alm_direccion ?></td>
+                        <td ><b>Direccion:</b></td>
+                        <td > <?= $model->alm_direccion ?></td>
                     </tr>
                     <tr>
                         <td><b>Fecha creacion:</b></td>

@@ -5,6 +5,7 @@ use app\models\Jurado;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 use kartik\export\ExportMenu;
 
 /* @var $this yii\web\View */
@@ -37,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'hAlign' => 'center',
                     'attribute' => 'jur_codigo',
                     'value' => function ($model, $key, $index, $widget) {
-                        return Html::tag('span', $model->jur_codigo, ['class' => 'badge bg-purple']);
+                        return Html::tag('span', 'JUR- '.$model->jur_codigo, ['class' => 'badge bg-purple']);
                     },
                     'filter' => false,
                 ],
@@ -49,7 +50,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function ($model, $key, $index, $widget) {
                         return Html::a($model->jur_nombres,  ['view', 'jur_codigo' => $model->jur_codigo]);
                     },
-                    'filter' => false,
+                    'filterType' => GridView::FILTER_SELECT2,
+                    'filter' => ArrayHelper::map(Jurado::find()->orderBy('jur_nombres')->all(), 'jur_nombres', 'jur_nombres'),
+                    'filterWidgetOptions' => [
+                        'options' => ['placeholder' => 'Todos...'],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ],
                 ],
                 [
                     'class' => 'kartik\grid\DataColumn',
@@ -59,7 +67,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function ($model, $key, $index, $widget) {
                         return Html::tag('span', $model->jur_apellidos);
                     },
-                    'filter' => false,
+                    'filterType' => GridView::FILTER_SELECT2,
+                    'filter' => ArrayHelper::map(Jurado::find()->orderBy('jur_apellidos')->all(), 'jur_apellidos', 'jur_apellidos'),
+                    'filterWidgetOptions' => [
+                        'options' => ['placeholder' => 'Todos...'],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ],
                 ],
                 [
                     'class' => 'kartik\grid\DataColumn',
@@ -69,7 +84,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function ($model, $key, $index, $widget) {
                         return Html::tag('span', $model->jur_especialidad);
                     },
-                    'filter' => false,
+                    'filterType' => GridView::FILTER_SELECT2,
+                    'filter' => ArrayHelper::map(Jurado::find()->orderBy('jur_especialidad')->all(), 'jur_especialidad', 'jur_especialidad'),
+                    'filterWidgetOptions' => [
+                        'options' => ['placeholder' => 'Todos...'],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ],
                 ],
                 [
                     'class' => 'kartik\grid\ActionColumn',

@@ -38,14 +38,15 @@ class Jurado extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['jur_codigo', 'jur_carnet', 'jur_telefono', 'jur_direccion', 'jur_email', 'jur_fecha_ing', 'jur_fecha_mod', 'jur_codusr'], 'required'],
+            [['jur_carnet', 'jur_telefono', 'jur_direccion', 'jur_email'], 'required'],
             [['jur_codigo', 'jur_rol', 'jur_codusr'], 'integer'],
-            [['jur_fecha_ing', 'jur_fecha_mod'], 'safe'],
+            [['jur_fecha_ing', 'jur_fecha_mod'], 'datetime'],
             [['jur_nombres', 'jur_apellidos', 'jur_especialidad'], 'string', 'max' => 250],
             [['jur_carnet', 'jur_email'], 'string', 'max' => 50],
             [['jur_telefono'], 'string', 'max' => 9],
             [['jur_direccion'], 'string', 'max' => 255],
             [['jur_codigo'], 'unique'],
+            [['jur_fecha_ing', 'jur_fecha_mod'], 'default', 'value' => date('Y-m-d HH:mm:ss')],
         ];
     }
 
@@ -55,17 +56,17 @@ class Jurado extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'jur_codigo' => 'Codigo',
+            'jur_codigo' => 'Código',
             'jur_nombres' => 'Nombres',
             'jur_apellidos' => 'Apellidos',
             'jur_especialidad' => 'Especialidad',
             'jur_rol' => 'Rol',
             'jur_carnet' => 'Carnet',
-            'jur_telefono' => 'Telefono',
-            'jur_direccion' => 'Direccion',
+            'jur_telefono' => 'Teléfono',
+            'jur_direccion' => 'Dirección',
             'jur_email' => 'Email',
-            'jur_fecha_ing' => 'Fecha Ing',
-            'jur_fecha_mod' => 'Fecha Mod',
+            'jur_fecha_ing' => 'Fecha Ingreso',
+            'jur_fecha_mod' => 'Fecha Modificación',
             'jur_codusr' => 'Codusr',
         ];
     }

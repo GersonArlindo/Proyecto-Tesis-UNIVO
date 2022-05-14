@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'hAlign' => 'center',
                     'attribute' => 'ase_codigo',
                     'value' => function ($model, $key, $index, $widget) {
-                        return Html::tag('span', $model->ase_codigo, ['class' => 'badge bg-purple']);
+                        return Html::tag('span', 'ASE- ' . $model->ase_codigo, ['class' => 'badge bg-purple']);
                     },
                     'filter' => false,
                 ],
@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'vAlign' => 'middle',
                     'format' => 'html',
                     'value' => function ($model, $key, $index, $widget) {
-                        return Html::a($model->ase_nombre,  ['view', 'ase_nombres' => $model->ase_nombres]);
+                        return Html::a($model->ase_nombres,  ['view', 'ase_nombres' => $model->ase_nombres]);
                     },
                     
                 ],
@@ -64,7 +64,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function ($model, $key, $index, $widget) {
                         return Html::a($model->ase_apellido,  ['view', 'ase_apellido' => $model->ase_apellido]);
                     },
-                
                    
                         ],
 

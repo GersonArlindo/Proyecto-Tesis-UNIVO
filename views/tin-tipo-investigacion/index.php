@@ -28,13 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php
             $gridColumns = [
                 [
-                    'class' => 'kartik\grid\SerialColumn',
-                    'contentOptions' => ['class' => 'kartik-sheet-style'],
-                    'width' => '36px',
-                    'header' => '#',
-                    'headerOptions' => ['class' => 'kartik-sheet-style']
-                ],
-                [
                     'class' => 'kartik\grid\DataColumn',
                     'width' => '80px',
                     'format' => 'raw',
@@ -42,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'hAlign' => 'center',
                     'attribute' => 'tin_codigo',
                     'value' => function ($model, $key, $index, $widget) {
-                        return Html::tag('span', $model->tin_codigo, ['class' => 'badge bg-purple']);
+                        return Html::tag('span', 'TIPO- '.$model->tin_codigo, ['class' => 'badge bg-purple']);
                     },
                     'filter' => false,
                 ],

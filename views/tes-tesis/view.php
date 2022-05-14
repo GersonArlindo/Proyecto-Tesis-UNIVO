@@ -30,6 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td><?= date('d-m-Y H:i:m', strtotime($model->tes_fecha_ing)) ?></td>
                         <td><b>Fecha modificacion:</b></td>
                         <td><?= date('d-m-Y H:i:m', strtotime($model->tes_fecha_mod)) ?></td>
+                        <td width="16%"><b>Usuario:</b></td>
+                        <td width="34%"> <?= $model->tes_codusr ?></td>
                     </tr>
                 </table>
             </div>

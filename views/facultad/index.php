@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'hAlign' => 'center',
                     'attribute' => 'fac_codigo',
                     'value' => function ($model, $key, $index, $widget) {
-                        return Html::tag('span', $model->fac_codigo, ['class' => 'badge bg-purple']);
+                        return Html::tag('span', 'FAC- ' . $model->fac_codigo, ['class' => 'badge bg-purple']);
                     },
                     'filter' => false,
                 ],

@@ -32,7 +32,7 @@ class TinTipoInvestigacion extends \yii\db\ActiveRecord
     {
         return [
             [['tin_codigo'], 'required'],
-            [['tin_codigo', 'tin_user'], 'integer'],
+            [['tin_codigo', 'tin_coduser'], 'integer'],
             [['tin_fecha_ing', 'tin_fecha_mod'], 'safe'],
             [['tin_nombre'], 'string', 'max' => 250],
             [['tin_codigo'], 'unique'],
@@ -49,7 +49,7 @@ class TinTipoInvestigacion extends \yii\db\ActiveRecord
             'tin_nombre' => 'Nombre',
             'tin_fecha_ing' => 'Fecha Ingreso',
             'tin_fecha_mod' => 'Fecha Modificacion',
-            'tin_user' => 'User',
+            'tin_coduser' => 'User',
         ];
     }
 
@@ -60,6 +60,6 @@ class TinTipoInvestigacion extends \yii\db\ActiveRecord
      */
     public function getTesTeses()
     {
-        return $this->hasMany(TesTesis::className(), ['tes_codtin' => 'tin_codigo']);
+        return $this->hasMany(TesTesis::class, ['tes_codtin' => 'tin_codigo']);
     }
 }

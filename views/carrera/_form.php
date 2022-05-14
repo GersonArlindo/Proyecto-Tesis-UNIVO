@@ -22,7 +22,7 @@ use yii\helpers\Html;
                     <div class="row">
                         <div class="col-md-12">
                             <?= Html::activeLabel($model, 'car_codigo', ['class' => 'control-label']) ?>
-                            <?= $form->field($model, 'car_codigo', ['showLabels' => false])->textInput(['autofocus' => true]) ?>
+                            <?= $form->field($model, 'car_codigo', ['showLabels' => false])->textInput(['autofocus' => true, 'disabled' => 'disabled']) ?>
                         </div>
                         <div class="col-md-6">
                             <?= Html::activeLabel($model, 'car_codfac', ['class' => 'control-label']) ?>

@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use app\models\TinTipoInvestigacion;
 use app\models\TinTipoInvestigacionSearch;
+use Exception;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -22,7 +24,7 @@ class TinTipoInvestigacionController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -69,17 +71,29 @@ class TinTipoInvestigacionController extends Controller
     {
         $model = new TinTipoInvestigacion();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'tin_codigo' => $model->tin_codigo]);
+        if ($model->load($this->request->post())) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $model->tin_fecha_ing = date('Y-m-d H:i:s');
+                $model->tin_fecha_mod = date('Y-m-d H:i:s');
+                $model->tin_coduser = \Yii::$app->user->identity->id;
+                if (!$model->save()) {
+                    throw new Exception(implode('<br />', \yii\helpers\ArrayHelper::getColumn($model->getErrors(), 0, false)));
+                }
+                $transaction->commit();
+            } catch (Exception $e) {
+                $transaction->rollBack();
+                $controller = Yii::$app->controller->id . "/" . Yii::$app->controller->action->id;
+                CoreController::getErrorLog(\Yii::$app->user->identity->id, $e, $controller); 
+                return $this->redirect(['index']);
             }
+            Yii::$app->session->setFlash('succes', 'Registro creado exitosamente. ');
+            return $this->redirect(['view', 'tin_codigo' => $model->tin_codigo]);
         } else {
-            $model->loadDefaultValues();
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -93,13 +107,20 @@ class TinTipoInvestigacionController extends Controller
     {
         $model = $this->findModel($tin_codigo);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'tin_codigo' => $model->tin_codigo]);
-        }
+        if ($model->load($this->request->post())) {
+            $model->tin_fecha_mod = date('Y-m-d H:i:s');
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+            if (!$model->save()) {
+                print_r($model->getErrors());
+                die();
+            }
+
+            return $this->redirect(['view', 'tin_codigo' => $model->tin_codigo]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**

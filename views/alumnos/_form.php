@@ -24,7 +24,7 @@ use yii\helpers\Html;
                     <div class="row">
                         <div class="col-md-6">
                             <?= Html::activeLabel($model, 'alm_codigo', ['class' => 'control-label']) ?>
-                            <?= $form->field($model, 'alm_codigo', ['showLabels' => false])->textInput(['autofocus' => true]) ?>
+                            <?= $form->field($model, 'alm_codigo', ['showLabels' => false])->textInput(['autofocus' => true, 'disabled' => 'disabled']) ?>
                         </div>
                         <div class="col-md-6">
                             <?= Html::activeLabel($model, 'alm_carnet', ['class' => 'control-label']) ?>

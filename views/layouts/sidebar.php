@@ -11,7 +11,7 @@ use yii\helpers\Url;
 <aside class="main-sidebar sidebar-dark-warning elevation-4" style="z-index: 1040 !important; background-color:#001529;">
     <!-- Brand Logo -->
     <a href="<?= Url::home() ?>" class="brand-link">
-        <img src="logo-univo.gif" alt="Logo" class="brand-image">
+        <img src="logo.png" alt="Logo" class="brand-image">
         </br>
     </a>
 

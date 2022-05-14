@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use app\models\AseAsesores;
 use app\models\AsesoresSearch;
+use Exception;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -22,7 +24,7 @@ class AsesoresController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -69,17 +71,58 @@ class AsesoresController extends Controller
     {
         $model = new AseAsesores();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'ase_codigo' => $model->ase_codigo]);
+        if ($model->load($this->request->post())) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $model->ase_codigo = $this->CreateCode();
+                $model->ase_fecha_ing = date('Y-m-d H:i:s');
+                $model->ase_fecha_mod = date('Y-m-d H:i:s');
+                $model->ase_codusr = \Yii::$app->user->identity->id;
+                if (!$model->save()) {
+                    throw new Exception(implode('<br />', \yii\helpers\ArrayHelper::getColumn($model->getErrors(), 0, false)));
+                }
+                $transaction->commit();
+            } catch (Exception $e) {
+                $transaction->rollBack();
+                $controller = Yii::$app->controller->id . "/" . Yii::$app->controller->action->id;
+                CoreController::getErrorLog(\Yii::$app->user->identity->id, $e, $controller); 
+                return $this->redirect(['index']);
             }
+            Yii::$app->session->setFlash('succes', 'Registro creado exitosamente. ');
+            return $this->redirect(['view', 'ase_codigo' => $model->ase_codigo]);
         } else {
-            $model->loadDefaultValues();
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
+    }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+    //FUNCION PARA CREAR ID DE ASESORES
+    function CreateCode()
+    {
+        $asesor = AseAsesores::find()->orderBy(['ase_codigo' => SORT_DESC])->one();
+        if (empty($asesor->ase_codigo)) $codigo = 0;
+        else $codigo = $asesor->ase_codigo;
+
+        $int = intval(preg_replace('/[^0-9]+/', '', $codigo), 10);
+        $id = $int + 1;
+
+        $numero = $id;
+        $tmp = "";
+        if ($id < 10) {
+            $tmp .= "000";
+            $tmp .= $id;
+        } elseif ($id >= 10 && $id < 100) {
+            $tmp .= "00";
+            $tmp .= $id;
+        } elseif ($id >= 100 && $id < 1000) {
+            $tmp .= "0";
+            $tmp .= $id;
+        } else {
+            $tmp .= $id;
+        }
+        $result = str_replace($id, $tmp, $numero);
+        return $result;
     }
 
     /**

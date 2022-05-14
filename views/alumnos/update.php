@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\AlmAlumnos */
 
-$this->title = 'Update Alm Alumnos: ' . $model->alm_codigo;
-$this->params['breadcrumbs'][] = ['label' => 'Alm Alumnos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->alm_codigo, 'url' => ['view', 'alm_codigo' => $model->alm_codigo]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Actualizar registro';
+$this->params['breadcrumbs'][] = ['label' => 'Listado', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Detalle', 'url' => ['view', 'alm_codigo' => $model->alm_codigo]];
+$this->params['breadcrumbs'][] = 'Actualizar';
 ?>
 <div class="alm-alumnos-update">
 
