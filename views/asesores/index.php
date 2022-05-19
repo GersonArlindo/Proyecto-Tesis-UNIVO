@@ -1,7 +1,7 @@
 <?php
 Yii::$app->language = 'es_ES';
 
-use app\models\CarCarrera;
+use app\models\AseAsesores;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
@@ -12,7 +12,7 @@ use kartik\export\ExportMenu;
 /* @var $searchModel backend\models\OsigSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Listado de Carreras';
+$this->title = 'Listado de Asesores';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
@@ -38,57 +38,65 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => 'raw',
                     'vAlign' => 'middle',
                     'hAlign' => 'center',
-                    'attribute' => 'car_codigo',
+                    'attribute' => 'ase_codigo',
                     'value' => function ($model, $key, $index, $widget) {
-                        return Html::tag('span', 'CAR- ' . $model->car_codigo, ['class' => 'badge bg-purple']);
+                        return Html::tag('span', 'ASE- ' . $model->ase_codigo, ['class' => 'badge bg-purple']);
                     },
-                    'filterType' => GridView::FILTER_SELECT2,
-                    'filter' => ArrayHelper::map(CarCarrera::find()->orderBy('car_codigo')->all(), 'car_codigo', 'car_codigo'),
-                    'filterWidgetOptions' => [
-                        'options' => ['placeholder' => 'Todos...'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ],
+                    'filter' => false,
                 ],
                 [
                     'class' => 'kartik\grid\DataColumn',
                     'width' => '300px',
-                    'attribute' => 'car_nombre',
+                    'attribute' => 'ase_nombres',
                     'vAlign' => 'middle',
                     'format' => 'html',
                     'value' => function ($model, $key, $index, $widget) {
-                        return Html::a($model->car_nombre,  ['view', 'car_codigo' => $model->car_codigo]);
+                        return Html::a($model->ase_nombres,  ['view', 'ase_nombres' => $model->ase_nombres]);
                     },
-                    'filterType' => GridView::FILTER_SELECT2,
-                    'filter' => ArrayHelper::map(CarCarrera::find()->orderBy('car_nombre')->all(), 'car_nombre', 'car_nombre'),
-                    'filterWidgetOptions' => [
-                        'options' => ['placeholder' => 'Todos...'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ],
+                    
                 ],
                 [
                     'class' => 'kartik\grid\DataColumn',
                     'width' => '300px',
-                    'attribute' => 'car_codfac',
+                    'attribute' => 'ase_apellido',
                     'vAlign' => 'middle',
                     'format' => 'html',
-                    'value' => 'carCodfac.fac_nombre',
-                    'filterType' => GridView::FILTER_SELECT2,
-                    'filter' => ArrayHelper::map(CarCarrera::find()->orderBy('car_codfac')->all(), 'carCodfac.fac_nombre', 'carCodfac.fac_nombre'),
-                    'filterWidgetOptions' => [
-                        'options' => ['placeholder' => 'Todos...'],
-                        'pluginOptions' => [
-                            'allowClear' => true
+                    'value' => function ($model, $key, $index, $widget) {
+                        return Html::a($model->ase_apellido,  ['view', 'ase_apellido' => $model->ase_apellido]);
+                    },
+                   
                         ],
-                    ],
-                ],
+
+                        [
+                            'class' => 'kartik\grid\DataColumn',
+                            'width' => '300px',
+                            'attribute' => 'ase_especialidad',
+                            'vAlign' => 'middle',
+                            'format' => 'html',
+                            'value' => function ($model, $key, $index, $widget) {
+                                return Html::a($model->ase_especialidad,  ['view', 'ase_especialidad' => $model->ase_especialidad]);
+                            },
+                                ],
+        
+                                [
+                                    'class' => 'kartik\grid\DataColumn',
+                                    'width' => '300px',
+                                    'attribute' => 'ase_anio',
+                                    'vAlign' => 'middle',
+                                    'format' => 'html',
+                                    'value' => function ($model, $key, $index, $widget) {
+                                        return Html::a($model->ase_anio,  ['view', 'ase_anio' => $model->ase_anio]);
+                                    },
+                                
+                                   
+                                        ],
+            
+
+
                 [
                     'class' => 'kartik\grid\ActionColumn',
-                    'urlCreator' => function ($action, CarCarrera $model, $key, $index, $column) {
-                        return Url::toRoute([$action, 'car_codigo' => $model->car_codigo]);
+                    'urlCreator' => function ($action, AseAsesores $model, $key, $index, $column) {
+                        return Url::toRoute([$action, 'ase_codigo' => $model->ase_codigo]);
                      }
                 ],
             ];
@@ -104,7 +112,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
             echo GridView::widget([
-                'id' => 'kv-carrera',
+                'id' => 'kv-Estudiantes',
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => $gridColumns,

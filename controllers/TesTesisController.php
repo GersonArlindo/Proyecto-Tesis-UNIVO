@@ -2,20 +2,19 @@
 
 namespace app\controllers;
 
-use app\models\CarCarrera;
-use app\models\CarreraSearch;
-use app\controllers\CoreController;
-use Exception;
-use Yii;
+use app\models\TesTesis;
+use app\models\TesTesisSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use app\controllers\CoreController;
+use Exception;
+use Yii;
 
 /**
- * CarreraController implements the CRUD actions for CarCarrera model.
+ * TesTesisController implements the CRUD actions for TesTesis model.
  */
-class CarreraController extends Controller
+class TesTesisController extends Controller
 {
     /**
      * @inheritDoc
@@ -36,13 +35,13 @@ class CarreraController extends Controller
     }
 
     /**
-     * Lists all CarCarrera models.
+     * Lists all TesTesis models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new CarreraSearch();
+        $searchModel = new TesTesisSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -52,32 +51,34 @@ class CarreraController extends Controller
     }
 
     /**
-     * Displays a single CarCarrera model.
-     * @param int $car_codigo Car Codigo
+     * Displays a single TesTesis model.
+     * @param int $tes_codigo Tes Codigo
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($car_codigo)
+    public function actionView($tes_codigo)
     {
         return $this->render('view', [
-            'model' => $this->findModel($car_codigo),
+            'model' => $this->findModel($tes_codigo),
         ]);
     }
 
     /**
-     * Creates a new CarCarrera model.
+     * Creates a new TesTesis model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new CarCarrera();
+        $model = new TesTesis();
+
         if ($model->load($this->request->post())) {
             $transaction = Yii::$app->db->beginTransaction();
             try {
-                $model->car_codigo = $this->CreateCode();
-                $model->car_fecha_ing = date('Y-m-d H:i:s');
-                $model->car_fecha_mod = date('Y-m-d H:i:s');
+                $model->tes_codigo = $this->CreateCode();
+                $model->tes_fecha_ing = date('Y-m-d H:i:s');
+                $model->tes_fecha_mod = date('Y-m-d H:i:s');
+                $model->tes_codusr = \Yii::$app->user->identity->id;
                 if (!$model->save()) {
                     throw new Exception(implode('<br />', \yii\helpers\ArrayHelper::getColumn($model->getErrors(), 0, false)));
                 }
@@ -89,7 +90,7 @@ class CarreraController extends Controller
                 return $this->redirect(['index']);
             }
             Yii::$app->session->setFlash('succes', 'Registro creado exitosamente. ');
-            return $this->redirect(['view', 'car_codigo' => $model->car_codigo]);
+            return $this->redirect(['view', 'tes_codigo' => $model->tes_codigo]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -97,12 +98,12 @@ class CarreraController extends Controller
         }
     }
 
-    //FUNCION PARA CREAR ID DE Carreras
+    //FUNCION PARA CREAR ID DE TEMAS
     function CreateCode()
     {
-        $carrera = CarCarrera::find()->orderBy(['car_codigo' => SORT_DESC])->one();
-        if (empty($carrera->car_codigo)) $codigo = 0;
-        else $codigo = $carrera->car_codigo;
+        $tema = TesTesis::find()->orderBy(['tes_codigo' => SORT_DESC])->one();
+        if (empty($tema->tes_codigo)) $codigo = 0;
+        else $codigo = $tema->tes_codigo;
 
         $int = intval(preg_replace('/[^0-9]+/', '', $codigo), 10);
         $id = $int + 1;
@@ -126,25 +127,25 @@ class CarreraController extends Controller
     }
 
     /**
-     * Updates an existing CarCarrera model.
+     * Updates an existing TesTesis model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $car_codigo Car Codigo
+     * @param int $tes_codigo Tes Codigo
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($car_codigo)
+    public function actionUpdate($tes_codigo)
     {
-        $model = $this->findModel($car_codigo);
+        $model = $this->findModel($tes_codigo);
 
         if ($model->load($this->request->post())) {
-            $model->car_fecha_mod = date('Y-m-d H:i:s');
+            $model->tes_fecha_mod = date('Y-m-d H:i:s');
 
             if (!$model->save()) {
                 print_r($model->getErrors());
                 die();
             }
 
-            return $this->redirect(['view', 'car_codigo' => $model->car_codigo]);
+            return $this->redirect(['view', 'tes_codigo' => $model->tes_codigo]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -153,29 +154,29 @@ class CarreraController extends Controller
     }
 
     /**
-     * Deletes an existing CarCarrera model.
+     * Deletes an existing TesTesis model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $car_codigo Car Codigo
+     * @param int $tes_codigo Tes Codigo
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($car_codigo)
+    public function actionDelete($tes_codigo)
     {
-        $this->findModel($car_codigo)->delete();
+        $this->findModel($tes_codigo)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the CarCarrera model based on its primary key value.
+     * Finds the TesTesis model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $car_codigo Car Codigo
-     * @return CarCarrera the loaded model
+     * @param int $tes_codigo Tes Codigo
+     * @return TesTesis the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($car_codigo)
+    protected function findModel($tes_codigo)
     {
-        if (($model = CarCarrera::findOne(['car_codigo' => $car_codigo])) !== null) {
+        if (($model = TesTesis::findOne(['tes_codigo' => $tes_codigo])) !== null) {
             return $model;
         }
 

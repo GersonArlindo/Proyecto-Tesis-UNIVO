@@ -2,20 +2,18 @@
 
 namespace app\controllers;
 
-use app\models\CarCarrera;
-use app\models\CarreraSearch;
-use app\controllers\CoreController;
+use app\models\AseAsesores;
+use app\models\AsesoresSearch;
 use Exception;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-
 /**
- * CarreraController implements the CRUD actions for CarCarrera model.
+ * AsesoresController implements the CRUD actions for AseAsesores model.
  */
-class CarreraController extends Controller
+class AsesoresController extends Controller
 {
     /**
      * @inheritDoc
@@ -36,13 +34,13 @@ class CarreraController extends Controller
     }
 
     /**
-     * Lists all CarCarrera models.
+     * Lists all AseAsesores models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new CarreraSearch();
+        $searchModel = new AsesoresSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -52,32 +50,34 @@ class CarreraController extends Controller
     }
 
     /**
-     * Displays a single CarCarrera model.
-     * @param int $car_codigo Car Codigo
+     * Displays a single AseAsesores model.
+     * @param int $ase_codigo Ase Codigo
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($car_codigo)
+    public function actionView($ase_codigo)
     {
         return $this->render('view', [
-            'model' => $this->findModel($car_codigo),
+            'model' => $this->findModel($ase_codigo),
         ]);
     }
 
     /**
-     * Creates a new CarCarrera model.
+     * Creates a new AseAsesores model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new CarCarrera();
+        $model = new AseAsesores();
+
         if ($model->load($this->request->post())) {
             $transaction = Yii::$app->db->beginTransaction();
             try {
-                $model->car_codigo = $this->CreateCode();
-                $model->car_fecha_ing = date('Y-m-d H:i:s');
-                $model->car_fecha_mod = date('Y-m-d H:i:s');
+                $model->ase_codigo = $this->CreateCode();
+                $model->ase_fecha_ing = date('Y-m-d H:i:s');
+                $model->ase_fecha_mod = date('Y-m-d H:i:s');
+                $model->ase_codusr = \Yii::$app->user->identity->id;
                 if (!$model->save()) {
                     throw new Exception(implode('<br />', \yii\helpers\ArrayHelper::getColumn($model->getErrors(), 0, false)));
                 }
@@ -89,7 +89,7 @@ class CarreraController extends Controller
                 return $this->redirect(['index']);
             }
             Yii::$app->session->setFlash('succes', 'Registro creado exitosamente. ');
-            return $this->redirect(['view', 'car_codigo' => $model->car_codigo]);
+            return $this->redirect(['view', 'ase_codigo' => $model->ase_codigo]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -97,12 +97,12 @@ class CarreraController extends Controller
         }
     }
 
-    //FUNCION PARA CREAR ID DE Carreras
+    //FUNCION PARA CREAR ID DE ASESORES
     function CreateCode()
     {
-        $carrera = CarCarrera::find()->orderBy(['car_codigo' => SORT_DESC])->one();
-        if (empty($carrera->car_codigo)) $codigo = 0;
-        else $codigo = $carrera->car_codigo;
+        $asesor = AseAsesores::find()->orderBy(['ase_codigo' => SORT_DESC])->one();
+        if (empty($asesor->ase_codigo)) $codigo = 0;
+        else $codigo = $asesor->ase_codigo;
 
         $int = intval(preg_replace('/[^0-9]+/', '', $codigo), 10);
         $id = $int + 1;
@@ -126,56 +126,49 @@ class CarreraController extends Controller
     }
 
     /**
-     * Updates an existing CarCarrera model.
+     * Updates an existing AseAsesores model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $car_codigo Car Codigo
+     * @param int $ase_codigo Ase Codigo
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($car_codigo)
+    public function actionUpdate($ase_codigo)
     {
-        $model = $this->findModel($car_codigo);
+        $model = $this->findModel($ase_codigo);
 
-        if ($model->load($this->request->post())) {
-            $model->car_fecha_mod = date('Y-m-d H:i:s');
-
-            if (!$model->save()) {
-                print_r($model->getErrors());
-                die();
-            }
-
-            return $this->redirect(['view', 'car_codigo' => $model->car_codigo]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'ase_codigo' => $model->ase_codigo]);
         }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**
-     * Deletes an existing CarCarrera model.
+     * Deletes an existing AseAsesores model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $car_codigo Car Codigo
+     * @param int $ase_codigo Ase Codigo
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($car_codigo)
+    public function actionDelete($ase_codigo)
     {
-        $this->findModel($car_codigo)->delete();
+        $this->findModel($ase_codigo)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the CarCarrera model based on its primary key value.
+     * Finds the AseAsesores model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $car_codigo Car Codigo
-     * @return CarCarrera the loaded model
+     * @param int $ase_codigo Ase Codigo
+     * @return AseAsesores the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($car_codigo)
+    protected function findModel($ase_codigo)
     {
-        if (($model = CarCarrera::findOne(['car_codigo' => $car_codigo])) !== null) {
+        if (($model = AseAsesores::findOne(['ase_codigo' => $ase_codigo])) !== null) {
             return $model;
         }
 

@@ -1,28 +1,26 @@
 <?php
 Yii::$app->language = 'es_ES';
 
-use app\models\CarCarrera;
+use app\models\Jurado;
 use yii\helpers\Html;
 use kartik\grid\GridView;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 use kartik\export\ExportMenu;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\OsigSearch */
+/* @var $searchModel app\models\JuradoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Listado de Carreras';
+$this->title = 'Jurados';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="row">
     <!-- left column -->
     <div class="col-md-12">
         <div class="tbl-cat-index">
-
             <h1><?= Html::encode($this->title) ?></h1>
-            <?php // echo $this->render('_search', ['model' => $searchModel]); 
-            ?>
             <?php
             $gridColumns = [
                 [
@@ -38,12 +36,22 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => 'raw',
                     'vAlign' => 'middle',
                     'hAlign' => 'center',
-                    'attribute' => 'car_codigo',
+                    'attribute' => 'jur_codigo',
                     'value' => function ($model, $key, $index, $widget) {
-                        return Html::tag('span', 'CAR- ' . $model->car_codigo, ['class' => 'badge bg-purple']);
+                        return Html::tag('span', 'JUR- '.$model->jur_codigo, ['class' => 'badge bg-purple']);
+                    },
+                    'filter' => false,
+                ],
+                [
+                    'class' => 'kartik\grid\DataColumn',
+                    'attribute' => 'jur_nombres',
+                    'vAlign' => 'middle',
+                    'format' => 'html',
+                    'value' => function ($model, $key, $index, $widget) {
+                        return Html::a($model->jur_nombres,  ['view', 'jur_codigo' => $model->jur_codigo]);
                     },
                     'filterType' => GridView::FILTER_SELECT2,
-                    'filter' => ArrayHelper::map(CarCarrera::find()->orderBy('car_codigo')->all(), 'car_codigo', 'car_codigo'),
+                    'filter' => ArrayHelper::map(Jurado::find()->orderBy('jur_nombres')->all(), 'jur_nombres', 'jur_nombres'),
                     'filterWidgetOptions' => [
                         'options' => ['placeholder' => 'Todos...'],
                         'pluginOptions' => [
@@ -53,15 +61,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'class' => 'kartik\grid\DataColumn',
-                    'width' => '300px',
-                    'attribute' => 'car_nombre',
+                    'attribute' => 'jur_apellidos',
                     'vAlign' => 'middle',
                     'format' => 'html',
                     'value' => function ($model, $key, $index, $widget) {
-                        return Html::a($model->car_nombre,  ['view', 'car_codigo' => $model->car_codigo]);
+                        return Html::tag('span', $model->jur_apellidos);
                     },
                     'filterType' => GridView::FILTER_SELECT2,
-                    'filter' => ArrayHelper::map(CarCarrera::find()->orderBy('car_nombre')->all(), 'car_nombre', 'car_nombre'),
+                    'filter' => ArrayHelper::map(Jurado::find()->orderBy('jur_apellidos')->all(), 'jur_apellidos', 'jur_apellidos'),
                     'filterWidgetOptions' => [
                         'options' => ['placeholder' => 'Todos...'],
                         'pluginOptions' => [
@@ -71,13 +78,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'class' => 'kartik\grid\DataColumn',
-                    'width' => '300px',
-                    'attribute' => 'car_codfac',
+                    'attribute' => 'jur_especialidad',
                     'vAlign' => 'middle',
                     'format' => 'html',
-                    'value' => 'carCodfac.fac_nombre',
+                    'value' => function ($model, $key, $index, $widget) {
+                        return Html::tag('span', $model->jur_especialidad);
+                    },
                     'filterType' => GridView::FILTER_SELECT2,
-                    'filter' => ArrayHelper::map(CarCarrera::find()->orderBy('car_codfac')->all(), 'carCodfac.fac_nombre', 'carCodfac.fac_nombre'),
+                    'filter' => ArrayHelper::map(Jurado::find()->orderBy('jur_especialidad')->all(), 'jur_especialidad', 'jur_especialidad'),
                     'filterWidgetOptions' => [
                         'options' => ['placeholder' => 'Todos...'],
                         'pluginOptions' => [
@@ -87,9 +95,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'class' => 'kartik\grid\ActionColumn',
-                    'urlCreator' => function ($action, CarCarrera $model, $key, $index, $column) {
-                        return Url::toRoute([$action, 'car_codigo' => $model->car_codigo]);
-                     }
+                    'urlCreator' => function ($action, Jurado $model, $key, $index, $column) {
+                        return Url::toRoute([$action, 'jur_codigo' => $model->jur_codigo]);
+                    }
                 ],
             ];
 
@@ -104,7 +112,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
             echo GridView::widget([
-                'id' => 'kv-carrera',
+                'id' => 'kv-jurado',
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => $gridColumns,
@@ -116,10 +124,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'toolbar' =>  [
                     [
                         'content' =>
-                        Html::a('<i class="fas fa-plus"></i> Agregar', ['create'], [
-                            'class' => 'btn btn-success',
-                            'data-pjax' => 0,
-                        ]) . ' ' .
+                            Html::a('<i class="fas fa-plus"></i> Agregar', ['create'], [
+                                'class' => 'btn btn-success',
+                                'data-pjax' => 0,
+                            ]) . ' ' .
                             Html::a('<i class="fas fa-redo"></i>', ['index'], [
                                 'class' => 'btn btn-outline-success',
                                 'data-pjax' => 0,
@@ -128,8 +136,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     $exportmenu,
                     '{toggleData}',
-                   
-                    
+
+
                 ],
                 'toggleDataContainer' => ['class' => 'btn-group mr-2'],
                 // set export properties
@@ -142,7 +150,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'showPageSummary'=>$pageSummary,
                 'panel' => [
                     'type' => GridView::TYPE_PRIMARY,
-                    'heading' => 'Carreras',
+                    'heading' => 'Jurados',
                 ],
                 'persistResize' => false,
             ]);
@@ -150,3 +158,4 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+

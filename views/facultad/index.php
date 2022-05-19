@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'hAlign' => 'center',
                     'attribute' => 'fac_codigo',
                     'value' => function ($model, $key, $index, $widget) {
-                        return Html::tag('span', $model->fac_codigo, ['class' => 'badge bg-purple']);
+                        return Html::tag('span', 'FAC- ' . $model->fac_codigo, ['class' => 'badge bg-purple']);
                     },
                     'filter' => false,
                 ],
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ],
                 ],
-                [
+               /* [
                     'class' => 'kartik\grid\DataColumn',
                     'attribute' => 'fac_fecha_ing',
                     'headerOptions' => ['class' => 'kv-sticky-column'],
@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'todayHighlight' => true,
                         ],
                     ]),
-                ],
+                ],*/
                 [
                     'class' => 'kartik\grid\ActionColumn',
                     'urlCreator' => function ($action, FacFacultad $model, $key, $index, $column) {

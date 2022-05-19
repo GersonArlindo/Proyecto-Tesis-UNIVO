@@ -28,7 +28,7 @@ $config = [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => false,
             'enableSession' => true,
-            'authTimeout' => 3600,
+            'authTimeout' => 36000,
             'loginUrl' => ['site/login'],
             'identityCookie' => ['name' => '_identity-yii2-basico', 'httpOnly' => true, 'secure' => true],
         ],

@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use app\models\FacFacultad;
 use app\models\FacultadSearch;
+use Exception;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -69,18 +71,56 @@ class FacultadController extends Controller
     {
         $model = new FacFacultad();
         if ($model->load($this->request->post())) {
-            $model->fac_fecha_ing = date('Y-m-d H:i:s');
-            $model->fac_fecha_mod = date('Y-m-d H:i:s');
-            if (!$model->save()){
-               print_r($model->getErrors());
-               die(); 
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $model->fac_codigo = $this->CreateCode();
+                $model->fac_fecha_ing = date('Y-m-d H:i:s');
+                $model->fac_fecha_mod = date('Y-m-d H:i:s');
+                if (!$model->save()) {
+                    throw new Exception(implode('<br />', \yii\helpers\ArrayHelper::getColumn($model->getErrors(), 0, false)));
+                }
+                $transaction->commit();
+            } catch (Exception $e) {
+                $transaction->rollBack();
+                $controller = Yii::$app->controller->id . "/" . Yii::$app->controller->action->id;
+                CoreController::getErrorLog(\Yii::$app->user->identity->id, $e, $controller); 
+                return $this->redirect(['index']);
             }
+            Yii::$app->session->setFlash('succes', 'Registro creado exitosamente. ');
             return $this->redirect(['view', 'fac_codigo' => $model->fac_codigo]);
         } else {
             return $this->render('create', [
                 'model' => $model,
             ]);
         }
+    }
+
+    //FUNCION PARA CREAR ID DE Facultades
+    function CreateCode()
+    {
+        $facultad = FacFacultad::find()->orderBy(['fac_codigo' => SORT_DESC])->one();
+        if (empty($facultad->fac_codigo)) $codigo = 0;
+        else $codigo = $facultad->fac_codigo;
+
+        $int = intval(preg_replace('/[^0-9]+/', '', $codigo), 10);
+        $id = $int + 1;
+
+        $numero = $id;
+        $tmp = "";
+        if ($id < 10) {
+            $tmp .= "000";
+            $tmp .= $id;
+        } elseif ($id >= 10 && $id < 100) {
+            $tmp .= "00";
+            $tmp .= $id;
+        } elseif ($id >= 100 && $id < 1000) {
+            $tmp .= "0";
+            $tmp .= $id;
+        } else {
+            $tmp .= $id;
+        }
+        $result = str_replace($id, $tmp, $numero);
+        return $result;
     }
 
     /**

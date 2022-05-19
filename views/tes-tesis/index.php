@@ -1,21 +1,25 @@
 <?php
 Yii::$app->language = 'es_ES';
 
-use app\models\CarCarrera;
+
+use app\models\TesTesis;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use kartik\export\ExportMenu;
 
+
+
+
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\OsigSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Listado de Carreras';
+$this->title = 'Temas de Tesis';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="row">
+<div class="row"> 
     <!-- left column -->
     <div class="col-md-12">
         <div class="tbl-cat-index">
@@ -26,24 +30,28 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php
             $gridColumns = [
                 [
-                    'class' => 'kartik\grid\SerialColumn',
-                    'contentOptions' => ['class' => 'kartik-sheet-style'],
-                    'width' => '36px',
-                    'header' => '#',
-                    'headerOptions' => ['class' => 'kartik-sheet-style']
-                ],
-                [
                     'class' => 'kartik\grid\DataColumn',
                     'width' => '80px',
                     'format' => 'raw',
                     'vAlign' => 'middle',
                     'hAlign' => 'center',
-                    'attribute' => 'car_codigo',
+                    'attribute' => 'tes_codigo',
                     'value' => function ($model, $key, $index, $widget) {
-                        return Html::tag('span', 'CAR- ' . $model->car_codigo, ['class' => 'badge bg-purple']);
+                        return Html::tag('span', 'TM- ' . $model->tes_codigo, ['class' => 'badge bg-purple']);
+                    },
+                    'filter' => false,
+                ],
+                [
+                    'class' => 'kartik\grid\DataColumn',
+                    'width' => '300px',
+                    'attribute' => 'test_tema',
+                    'vAlign' => 'middle',
+                    'format' => 'html',
+                    'value' => function ($model, $key, $index, $widget) {
+                        return Html::a($model->test_tema,  ['view', 'tes_codigo' => $model->tes_codigo]);
                     },
                     'filterType' => GridView::FILTER_SELECT2,
-                    'filter' => ArrayHelper::map(CarCarrera::find()->orderBy('car_codigo')->all(), 'car_codigo', 'car_codigo'),
+                    'filter' => ArrayHelper::map(TesTesis::find()->orderBy('test_tema')->all(), 'test_tema', 'test_tema'),
                     'filterWidgetOptions' => [
                         'options' => ['placeholder' => 'Todos...'],
                         'pluginOptions' => [
@@ -54,30 +62,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'class' => 'kartik\grid\DataColumn',
                     'width' => '300px',
-                    'attribute' => 'car_nombre',
+                    'attribute' => 'tes_codtin',
                     'vAlign' => 'middle',
                     'format' => 'html',
-                    'value' => function ($model, $key, $index, $widget) {
-                        return Html::a($model->car_nombre,  ['view', 'car_codigo' => $model->car_codigo]);
-                    },
+                    'value' => 'tesCodtin.tin_nombre',
                     'filterType' => GridView::FILTER_SELECT2,
-                    'filter' => ArrayHelper::map(CarCarrera::find()->orderBy('car_nombre')->all(), 'car_nombre', 'car_nombre'),
-                    'filterWidgetOptions' => [
-                        'options' => ['placeholder' => 'Todos...'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ],
-                ],
-                [
-                    'class' => 'kartik\grid\DataColumn',
-                    'width' => '300px',
-                    'attribute' => 'car_codfac',
-                    'vAlign' => 'middle',
-                    'format' => 'html',
-                    'value' => 'carCodfac.fac_nombre',
-                    'filterType' => GridView::FILTER_SELECT2,
-                    'filter' => ArrayHelper::map(CarCarrera::find()->orderBy('car_codfac')->all(), 'carCodfac.fac_nombre', 'carCodfac.fac_nombre'),
+                    'filter' => ArrayHelper::map(TesTesis::find()->orderBy('tes_codtin')->all(), 'tesCodtin.tin_nombre', 'tesCodtin.tin_nombre'),
                     'filterWidgetOptions' => [
                         'options' => ['placeholder' => 'Todos...'],
                         'pluginOptions' => [
@@ -87,8 +77,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'class' => 'kartik\grid\ActionColumn',
-                    'urlCreator' => function ($action, CarCarrera $model, $key, $index, $column) {
-                        return Url::toRoute([$action, 'car_codigo' => $model->car_codigo]);
+                    'urlCreator' => function ($action, TesTesis $model, $key, $index, $column) {
+                        return Url::toRoute([$action, 'tes_codigo' => $model->tes_codigo]);
                      }
                 ],
             ];
@@ -104,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
             echo GridView::widget([
-                'id' => 'kv-carrera',
+                'id' => 'kv-tes-tesis',
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => $gridColumns,
@@ -142,7 +132,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'showPageSummary'=>$pageSummary,
                 'panel' => [
                     'type' => GridView::TYPE_PRIMARY,
-                    'heading' => 'Carreras',
+                    'heading' => 'Temas de Tesis',
                 ],
                 'persistResize' => false,
             ]);

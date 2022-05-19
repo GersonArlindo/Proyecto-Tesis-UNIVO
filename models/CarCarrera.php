@@ -61,10 +61,10 @@ class CarCarrera extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    /*public function getAlmAlumnos()
+    public function getAlmAlumnos()
     {
-        return $this->hasMany(AlmAlumnos::className(), ['alm_codcar' => 'car_codigo']);
-    }*/
+        return $this->hasMany(AlmAlumnos::class, ['alm_codcar' => 'car_codigo']);
+    }
 
     /**
      * Gets query for [[CarCodfac]].
