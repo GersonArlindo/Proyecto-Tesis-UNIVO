@@ -75,6 +75,7 @@ class CarreraController extends Controller
         if ($model->load($this->request->post())) {
             $transaction = Yii::$app->db->beginTransaction();
             try {
+                $model->car_codigo = $this->CreateCode();
                 $model->car_fecha_ing = date('Y-m-d H:i:s');
                 $model->car_fecha_mod = date('Y-m-d H:i:s');
                 if (!$model->save()) {
@@ -94,6 +95,34 @@ class CarreraController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    //FUNCION PARA CREAR ID DE Carreras
+    function CreateCode()
+    {
+        $carrera = CarCarrera::find()->orderBy(['car_codigo' => SORT_DESC])->one();
+        if (empty($carrera->car_codigo)) $codigo = 0;
+        else $codigo = $carrera->car_codigo;
+
+        $int = intval(preg_replace('/[^0-9]+/', '', $codigo), 10);
+        $id = $int + 1;
+
+        $numero = $id;
+        $tmp = "";
+        if ($id < 10) {
+            $tmp .= "000";
+            $tmp .= $id;
+        } elseif ($id >= 10 && $id < 100) {
+            $tmp .= "00";
+            $tmp .= $id;
+        } elseif ($id >= 100 && $id < 1000) {
+            $tmp .= "0";
+            $tmp .= $id;
+        } else {
+            $tmp .= $id;
+        }
+        $result = str_replace($id, $tmp, $numero);
+        return $result;
     }
 
     /**

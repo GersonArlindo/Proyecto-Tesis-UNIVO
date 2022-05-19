@@ -56,18 +56,18 @@ class AseAsesores extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ase_codigo' => 'Ase Codigo',
-            'ase_nombres' => 'Ase Nombres',
-            'ase_apellido' => 'Ase Apellido',
-            'ase_especialidad' => 'Ase Especialidad',
-            'ase_anio' => 'Ase Anio',
-            'ase_carnet' => 'Ase Carnet',
-            'ase_email' => 'Ase Email',
-            'ase_telefono' => 'Ase Telefono',
-            'ase_direccion' => 'Ase Direccion',
-            'ase_fecha_ing' => 'Ase Fecha Ing',
-            'ase_fecha_mod' => 'Ase Fecha Mod',
-            'ase_codusr' => 'Ase Codusr',
+            'ase_codigo' => 'Codigo',
+            'ase_nombres' => 'Nombres',
+            'ase_apellido' => 'Apellido',
+            'ase_especialidad' => 'Especialidad',
+            'ase_anio' => 'Año',
+            'ase_carnet' => 'Carnet',
+            'ase_email' => 'Email',
+            'ase_telefono' => 'Telefono',
+            'ase_direccion' => 'Direccion',
+            'ase_fecha_ing' => 'Fecha Ingreso',
+            'ase_fecha_mod' => 'Fecha Modificacion',
+            'ase_codusr' => 'Usuario',
         ];
     }
 
@@ -78,6 +78,6 @@ class AseAsesores extends \yii\db\ActiveRecord
      */
     public function getGruGrupos()
     {
-        return $this->hasMany(GruGrupos::className(), ['gru_codase' => 'ase_codigo']);
+        return $this->hasMany(GruGrupos::class, ['gru_codase' => 'ase_codigo']);
     }
 }

@@ -8,7 +8,7 @@ use yii\helpers\Url;
     }
 </style>
 
-<aside class="main-sidebar sidebar-dark-warning elevation-4" style="z-index: 1040 !important;">
+<aside class="main-sidebar sidebar-dark-warning elevation-4" style="z-index: 1040 !important; background-color:#001529;">
     <!-- Brand Logo -->
     <a href="<?= Url::home() ?>" class="brand-link">
         <img src="logo.png" alt="Logo" class="brand-image">
@@ -47,7 +47,7 @@ use yii\helpers\Url;
                 <!------- END DASHBOARD ------->
 
                 <!------- ESTUDIANTES ------->
-                <?php if (Yii::$app->controller->id == 'estudiante' && in_array(\Yii::$app->controller->action->id, ['index'])) {
+                <?php if (Yii::$app->controller->id == 'alumnos' && in_array(\Yii::$app->controller->action->id, ['index'])) {
                     $li = "nav-item active";
                     $a = "nav-link active";
                 } else {
@@ -55,13 +55,12 @@ use yii\helpers\Url;
                     $a = "nav-link";
                 }
                 ?>
-                <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/estudiante/index']); ?>"><i class="nav-icon fa fa-graduation-cap"></i>
+                <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/alumnos/index']); ?>"><i class="nav-icon fa fa-graduation-cap"></i>
                         <p>Estudiantes</p>
                     </a></li>
                 <!------- END ESTUDIANTES ------->
-
-                <!------- TEMA DE TESIS ------->
-                <?php if (Yii::$app->controller->id == 'temaTesis' && in_array(\Yii::$app->controller->action->id, ['index'])) {
+                 <!------- TIPO DE TESIS ------->
+                 <?php if (Yii::$app->controller->id == 'tin-tipo-investigacion' && in_array(\Yii::$app->controller->action->id, ['index'])) {
                     $li = "nav-item active";
                     $a = "nav-link active";
                 } else {
@@ -69,7 +68,20 @@ use yii\helpers\Url;
                     $a = "nav-link";
                 }
                 ?>
-                <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/temaTesis/index']); ?>"><i class="nav-icon fa fa-book"></i>
+                <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/tin-tipo-investigacion/index']); ?>"><i class="nav-icon fa fa-book"></i>
+                        <p>Tipos de Investigacion</p>
+                    </a></li>
+                <!------- END TIPO DE TESIS ------->
+                <!------- TEMA DE TESIS ------->
+                <?php if (Yii::$app->controller->id == 'tes-tesis' && in_array(\Yii::$app->controller->action->id, ['index'])) {
+                    $li = "nav-item active";
+                    $a = "nav-link active";
+                } else {
+                    $li = "nav-item";
+                    $a = "nav-link";
+                }
+                ?>
+                <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/tes-tesis/index']); ?>"><i class="nav-icon fa fa-book"></i>
                         <p>Temas de Tesis</p>
                     </a></li>
                 <!------- END TEMA DE TESIS ------->

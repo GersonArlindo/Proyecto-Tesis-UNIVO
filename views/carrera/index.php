@@ -40,21 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'hAlign' => 'center',
                     'attribute' => 'car_codigo',
                     'value' => function ($model, $key, $index, $widget) {
-                        return Html::tag('span', $model->car_codigo, ['class' => 'badge bg-purple']);
-                    },
-                    'filter' => false,
-                ],
-                [
-                    'class' => 'kartik\grid\DataColumn',
-                    'width' => '300px',
-                    'attribute' => 'car_codfac',
-                    'vAlign' => 'middle',
-                    'format' => 'html',
-                    'value' => function ($model, $key, $index, $widget) {
-                        return Html::a($model->car_codfac,  ['view', 'car_codfac' => $model->car_codfac]);
+                        return Html::tag('span', 'CAR- ' . $model->car_codigo, ['class' => 'badge bg-purple']);
                     },
                     'filterType' => GridView::FILTER_SELECT2,
-                    'filter' => ArrayHelper::map(CarCarrera::find()->orderBy('car_codfac')->all(), 'car_codfac', 'car_codfac'),
+                    'filter' => ArrayHelper::map(CarCarrera::find()->orderBy('car_codigo')->all(), 'car_codigo', 'car_codigo'),
                     'filterWidgetOptions' => [
                         'options' => ['placeholder' => 'Todos...'],
                         'pluginOptions' => [
@@ -82,45 +71,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'class' => 'kartik\grid\DataColumn',
-                    'attribute' => 'car_fecha_ing',
-                    'headerOptions' => ['class' => 'kv-sticky-column'],
-                    'contentOptions' => ['class' => 'kv-sticky-column'],
+                    'width' => '300px',
+                    'attribute' => 'car_codfac',
                     'vAlign' => 'middle',
-                    'hAlign' => 'right',
-                    'width' => '250px',
-                    'filterType' => GridView::FILTER_DATE,
-                    'filterWidgetOptions' => ([
-                        'model' => $dataProvider,
-                        'attribute' => 'car_fecha_ing',
-                        'convertFormat' => true,
+                    'format' => 'html',
+                    'value' => 'carCodfac.fac_nombre',
+                    'filterType' => GridView::FILTER_SELECT2,
+                    'filter' => ArrayHelper::map(CarCarrera::find()->orderBy('car_codfac')->all(), 'carCodfac.fac_nombre', 'carCodfac.fac_nombre'),
+                    'filterWidgetOptions' => [
+                        'options' => ['placeholder' => 'Todos...'],
                         'pluginOptions' => [
-                            'format' => 'yyyy-M-dd',
-                            'autoWidget' => true,
-                            'autoclose' => true,
-                            'todayHighlight' => true,
+                            'allowClear' => true
                         ],
-                    ]),
-                ],
-                [
-                    'class' => 'kartik\grid\DataColumn',
-                    'attribute' => 'car_fecha_mod',
-                    'headerOptions' => ['class' => 'kv-sticky-column'],
-                    'contentOptions' => ['class' => 'kv-sticky-column'],
-                    'vAlign' => 'middle',
-                    'hAlign' => 'right',
-                    'width' => '250px',
-                    'filterType' => GridView::FILTER_DATE,
-                    'filterWidgetOptions' => ([
-                        'model' => $dataProvider,
-                        'attribute' => 'car_fecha_mod',
-                        'convertFormat' => true,
-                        'pluginOptions' => [
-                            'format' => 'yyyy-M-dd',
-                            'autoWidget' => true,
-                            'autoclose' => true,
-                            'todayHighlight' => true,
-                        ],
-                    ]),
+                    ],
                 ],
                 [
                     'class' => 'kartik\grid\ActionColumn',
