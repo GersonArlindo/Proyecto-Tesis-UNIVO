@@ -16,9 +16,6 @@ use yii\helpers\Html;
 <div class="row">
     <div class="col-md-12">
         <div class="card card-primary">
-            <div class="card-header">
-                <h3 class="card-title">Crear / Editar registro</h3>
-            </div>
             <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_HORIZONTAL]); ?>
             <div class="card-body">
                 <form role="form">
@@ -42,9 +39,10 @@ use yii\helpers\Html;
                         </div>
                         <div class="col-md-6">
                             <?= Html::activeLabel($model, 'alm_codgrp', ['class' => 'control-label']) ?>
-                            <?= $form->field($model, 'alm_codgrp', ['showLabels' => false])->widget(Select2::class, [
+                            <?= $form->field($id, 'grp_codigo', ['showLabels' => false])->widget(Select2::class, [
                                 'data' => ArrayHelper::map(Grupo::find()->all(), 'grp_codigo', 'grp_tema'),
                                 'language' => 'es',
+                                'disabled' => true,
                                 'options' => ['placeholder' => '- Seleccionar Categoria -'],
                                 'pluginOptions' => ['allowClear' => true],
                             ]); ?>
@@ -76,7 +74,7 @@ use yii\helpers\Html;
                     </div>
                     <div class="card-footer">
                         <?= Html::submitButton($model->isNewRecord ? '<i class="fa fa-save"></i> Guardar' : '<i class="fa fa-save"></i> Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-                        <?= Html::a('<i class="fa fa-ban"></i> Cancelar', ['index'], ['class' => 'btn btn-danger']) ?>
+                        <?= Html::button('<i class="fa fa-ban"></i> Cancelar',['class' => 'btn btn-danger',  'data-dismiss' => 'modal']) ?>
                     </div>
                 </form>
                 <?php ActiveForm::end(); ?>

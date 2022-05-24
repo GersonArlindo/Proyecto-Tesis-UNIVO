@@ -1,7 +1,10 @@
 <?php
 
+use app\models\TinTipoInvestigacion;
 use kartik\daterange\DateRangePicker;
 use kartik\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use kartik\widgets\Select2;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -32,9 +35,14 @@ use yii\helpers\Html;
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                    <div class="col-md-6">
                             <?= Html::activeLabel($model, 'grp_tipo', ['class' => 'control-label']) ?>
-                            <?= $form->field($model, 'grp_tipo', ['showLabels' => false])->textInput(['autofocus' => true]) ?>
+                            <?= $form->field($model, 'grp_tipo', ['showLabels' => false])->widget(Select2::class, [
+                                'data' => ArrayHelper::map(TinTipoInvestigacion::find()->all(), 'tin_codigo', 'tin_nombre'),
+                                'language' => 'es',
+                                'options' => ['placeholder' => '- Seleccionar Categoria -'],
+                                'pluginOptions' => ['allowClear' => true],
+                            ]); ?>
                         </div>
                         <div class="col-md-6">
                             <?= Html::activeLabel($model, 'grp_estado', ['class' => 'control-label']) ?>

@@ -17,8 +17,8 @@ class AsesoresSearch extends AseAsesores
     public function rules()
     {
         return [
-            [['ase_codigo', 'ase_anio', 'ase_codusr'], 'integer'],
-            [['ase_nombres', 'ase_apellido', 'ase_especialidad', 'ase_carnet', 'ase_email', 'ase_telefono', 'ase_direccion', 'ase_fecha_ing', 'ase_fecha_mod'], 'safe'],
+            [['ase_codigo', 'ase_codusr'], 'integer'],
+            [['ase_nombres', 'ase_apellido', 'ase_especialidad', 'ase_email', 'ase_telefono', 'ase_direccion', 'ase_fecha_ing', 'ase_fecha_mod'], 'safe'],
         ];
     }
 
@@ -59,7 +59,6 @@ class AsesoresSearch extends AseAsesores
         // grid filtering conditions
         $query->andFilterWhere([
             'ase_codigo' => $this->ase_codigo,
-            'ase_anio' => $this->ase_anio,
             'ase_fecha_ing' => $this->ase_fecha_ing,
             'ase_fecha_mod' => $this->ase_fecha_mod,
             'ase_codusr' => $this->ase_codusr,
@@ -68,7 +67,6 @@ class AsesoresSearch extends AseAsesores
         $query->andFilterWhere(['like', 'ase_nombres', $this->ase_nombres])
             ->andFilterWhere(['like', 'ase_apellido', $this->ase_apellido])
             ->andFilterWhere(['like', 'ase_especialidad', $this->ase_especialidad])
-            ->andFilterWhere(['like', 'ase_carnet', $this->ase_carnet])
             ->andFilterWhere(['like', 'ase_email', $this->ase_email])
             ->andFilterWhere(['like', 'ase_telefono', $this->ase_telefono])
             ->andFilterWhere(['like', 'ase_direccion', $this->ase_direccion]);

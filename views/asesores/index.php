@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function ($model, $key, $index, $widget) {
                         return Html::a($model->ase_nombres,  ['view', 'ase_nombres' => $model->ase_nombres]);
                     },
-                    
+
                 ],
                 [
                     'class' => 'kartik\grid\DataColumn',
@@ -64,40 +64,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function ($model, $key, $index, $widget) {
                         return Html::a($model->ase_apellido,  ['view', 'ase_apellido' => $model->ase_apellido]);
                     },
-                   
-                        ],
 
-                        [
-                            'class' => 'kartik\grid\DataColumn',
-                            'width' => '300px',
-                            'attribute' => 'ase_especialidad',
-                            'vAlign' => 'middle',
-                            'format' => 'html',
-                            'value' => function ($model, $key, $index, $widget) {
-                                return Html::a($model->ase_especialidad,  ['view', 'ase_especialidad' => $model->ase_especialidad]);
-                            },
-                                ],
-        
-                                [
-                                    'class' => 'kartik\grid\DataColumn',
-                                    'width' => '300px',
-                                    'attribute' => 'ase_anio',
-                                    'vAlign' => 'middle',
-                                    'format' => 'html',
-                                    'value' => function ($model, $key, $index, $widget) {
-                                        return Html::a($model->ase_anio,  ['view', 'ase_anio' => $model->ase_anio]);
-                                    },
-                                
-                                   
-                                        ],
-            
+                ],
 
-
+                [
+                    'class' => 'kartik\grid\DataColumn',
+                    'width' => '300px',
+                    'attribute' => 'ase_especialidad',
+                    'vAlign' => 'middle',
+                    'format' => 'html',
+                    'value' => function ($model, $key, $index, $widget) {
+                        return Html::a($model->ase_especialidad,  ['view', 'ase_especialidad' => $model->ase_especialidad]);
+                    },
+                ],
                 [
                     'class' => 'kartik\grid\ActionColumn',
                     'urlCreator' => function ($action, AseAsesores $model, $key, $index, $column) {
                         return Url::toRoute([$action, 'ase_codigo' => $model->ase_codigo]);
-                     }
+                    }
                 ],
             ];
 
@@ -136,8 +120,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     $exportmenu,
                     '{toggleData}',
-                   
-                    
+
+
                 ],
                 'toggleDataContainer' => ['class' => 'btn-group mr-2'],
                 // set export properties

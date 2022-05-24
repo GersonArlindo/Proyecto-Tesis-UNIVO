@@ -8,20 +8,33 @@ use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use kartik\export\ExportMenu;
+use yii\bootstrap4\Modal;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\OsigSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Listado de Estudiantes';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<?php
+//FIXME CREAR MODAL
+Modal::begin([
+    'options' => [
+        'tabindex' => false
+    ],
+    'title' => 'Crear registro',
+    'id' => 'create-modal-alumno',
+    'size' => 'modal-lg'
+]);
+echo "<div id='createModalContent'></div>";
+Modal::end();
+?>
+
 <div class="row">
     <!-- left column -->
     <div class="col-md-12">
         <div class="tbl-cat-index">
 
-            <h1><?= Html::encode($this->title) ?></h1>
             <?php // echo $this->render('_search', ['model' => $searchModel]); 
             ?>
             <?php
@@ -53,14 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'vAlign' => 'middle',
                     'format' => 'html',
                     'value' => 'almCodcar.car_nombre',
-                    'filterType' => GridView::FILTER_SELECT2,
-                    'filter' => ArrayHelper::map(CarCarrera::find()->orderBy('car_nombre')->all(), 'car_nombre', 'car_nombre'),
-                    'filterWidgetOptions' => [
-                        'options' => ['placeholder' => 'Todos...'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ],
+                    'filter' => false
                 ],
                 [
                     'class' => 'kartik\grid\DataColumn',
@@ -71,14 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function ($model, $key, $index, $widget) {
                         return Html::a($model->alm_nombres. ' ' .$model->alm_apellidos,  ['view', 'alm_codigo' => $model->alm_codigo]);
                     },
-                    'filterType' => GridView::FILTER_SELECT2,
-                    'filter' => ArrayHelper::map(AlmAlumnos::find()->orderBy('alm_nombres')->all(), 'alm_nombres', 'alm_nombres'),
-                    'filterWidgetOptions' => [
-                        'options' => ['placeholder' => 'Todos...'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ],
+                    'filter' => false
                 ],
                 [
                     'class' => 'kartik\grid\DataColumn',
@@ -89,14 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function ($model, $key, $index, $widget) {
                         return Html::a($model->alm_carnet,  ['view', 'alm_codigo' => $model->alm_codigo]);
                     },
-                    'filterType' => GridView::FILTER_SELECT2,
-                    'filter' => ArrayHelper::map(AlmAlumnos::find()->orderBy('alm_carnet')->all(), 'alm_carnet', 'alm_carnet'),
-                    'filterWidgetOptions' => [
-                        'options' => ['placeholder' => 'Todos...'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ],
+                    'filter' => false
                 ],
                 [
                     'class' => 'kartik\grid\DataColumn',
@@ -107,14 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function ($model, $key, $index, $widget) {
                         return Html::a($model->alm_telefono,  ['view', 'alm_codigo' => $model->alm_codigo]);
                     },
-                    'filterType' => GridView::FILTER_SELECT2,
-                    'filter' => ArrayHelper::map(AlmAlumnos::find()->orderBy('alm_telefono')->all(), 'alm_telefono', 'alm_telefono'),
-                    'filterWidgetOptions' => [
-                        'options' => ['placeholder' => 'Todos...'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ],
+                    'filter' => false
                 ],
                 [
                     'class' => 'kartik\grid\DataColumn',
@@ -125,21 +110,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function ($model, $key, $index, $widget) {
                         return Html::a($model->alm_email,  ['view', 'alm_codigo' => $model->alm_codigo]);
                     },
-                    'filterType' => GridView::FILTER_SELECT2,
-                    'filter' => ArrayHelper::map(AlmAlumnos::find()->orderBy('alm_email')->all(), 'alm_email', 'alm_email'),
-                    'filterWidgetOptions' => [
-                        'options' => ['placeholder' => 'Todos...'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ],
+                    'filter' => false
                 ],
-                [
-                    'class' => 'kartik\grid\ActionColumn',
-                    'urlCreator' => function ($action, AlmAlumnos $model, $key, $index, $column) {
-                        return Url::toRoute([$action, 'alm_codigo' => $model->alm_codigo]);
-                     }
-                ],
+                // [
+                //     'class' => 'kartik\grid\ActionColumn',
+                //     'urlCreator' => function ($action, AlmAlumnos $model, $key, $index, $column) {
+                //         return Url::toRoute([$action, 'alm_codigo' => $model->alm_codigo]);
+                //      }
+                // ],
             ];
 
             $exportmenu = ExportMenu::widget([
@@ -165,10 +143,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'toolbar' =>  [
                     [
                         'content' =>
-                        Html::a('<i class="fas fa-plus"></i> Agregar', ['create'], [
-                            'class' => 'btn btn-success',
-                            'data-pjax' => 0,
-                        ]) . ' ' .
+                        Html::button('<i class="fa fa-plus"></i> Agregar Estudiante', ['value' => Url::to('index.php?r=grupo/create-modal-alumno&grp_codigo='.$model->grp_codigo), 
+                        'class' => 'btn btn-warning', 'id' => 'modalButton'
+                        ]) .' &nbsp&nbsp '.
                             Html::a('<i class="fas fa-redo"></i>', ['index'], [
                                 'class' => 'btn btn-outline-success',
                                 'data-pjax' => 0,

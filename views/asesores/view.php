@@ -25,8 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tr>
                         <td><b>Codigo: </b></td>
                         <td><?= $model->ase_codigo ?></td>
-                        <td><b>Carnet: </b></td>
-                        <td><?= $model->ase_carnet ?></td>
                     </tr>
                     <tr>
                         <td><b>Telefono: </b></td>

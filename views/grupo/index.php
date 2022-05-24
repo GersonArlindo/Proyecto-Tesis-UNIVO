@@ -1,6 +1,8 @@
 <?php
 
+use app\models\CarCarrera;
 use app\models\Grupo;
+use app\models\TinTipoInvestigacion;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\helpers\Url;
@@ -11,7 +13,7 @@ use yii\helpers\ArrayHelper;
 /* @var $searchModel app\models\GrupoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Grupos';
+$this->title = 'Listado de Grupos';
 $this->params['breadcrumbs'][] = $this->title;
 
 
@@ -39,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'hAlign' => 'center',
                     'attribute' => 'grp_codigo',
                     'value' => function ($model, $key, $index, $widget) {
-                        return Html::tag('span', $model->grp_codigo, ['class' => 'badge bg-purple']);
+                        return Html::tag('span', 'GRP-'.$model->grp_codigo, ['class' => 'badge bg-purple']);
                     },
                     'filter' => false,
                 ],
@@ -62,23 +64,37 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'class' => 'kartik\grid\DataColumn',
-                    'attribute' => 'grp_codcar',
+                    'width' => '300px',
+                    'attribute' => 'grp_tipo',
+                    'header' => 'Tipo',
                     'vAlign' => 'middle',
                     'format' => 'html',
-                    'value' => function ($model, $key, $index, $widget) {
-                        return Html::tag('span', $model->getCarrera());
-                    },
-                    'filter' => false,
+                    'value' => 'grpTipo.tin_nombre',
+                    'filterType' => GridView::FILTER_SELECT2,
+                    'filter' => ArrayHelper::map(TinTipoInvestigacion::find()->orderBy('tin_nombre')->all(), 'tin_nombre', 'tin_nombre'),
+                    'filterWidgetOptions' => [
+                        'options' => ['placeholder' => 'Todos...'],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ],
                 ],
                 [
                     'class' => 'kartik\grid\DataColumn',
-                    'attribute' => 'grp_tipo',
+                    'width' => '300px',
+                    'attribute' => 'grp_codcar',
+                    'header' => 'Carrera',
                     'vAlign' => 'middle',
                     'format' => 'html',
-                    'value' => function ($model, $key, $index, $widget) {
-                        return Html::tag('span', $model->grp_tipo);
-                    },
-                    'filter' => false,
+                    'value' => 'grpCodcar.car_nombre',
+                    'filterType' => GridView::FILTER_SELECT2,
+                    'filter' => ArrayHelper::map(CarCarrera::find()->orderBy('car_nombre')->all(), 'car_nombre', 'car_nombre'),
+                    'filterWidgetOptions' => [
+                        'options' => ['placeholder' => 'Todos...'],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ],
                 ],
                 [
                     'class' => 'kartik\grid\ActionColumn',
@@ -99,7 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
             echo GridView::widget([
-                'id' => 'kv-jurado',
+                'id' => 'kv-grupo',
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => $gridColumns,
@@ -137,7 +153,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'showPageSummary'=>$pageSummary,
                 'panel' => [
                     'type' => GridView::TYPE_PRIMARY,
-                    'heading' => 'Jurados',
+                    'heading' => 'Grupos',
                 ],
                 'persistResize' => false,
             ]);

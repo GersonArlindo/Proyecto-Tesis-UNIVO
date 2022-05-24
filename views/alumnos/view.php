@@ -17,42 +17,44 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-body">
                 <table class="table table-sm table-striped table-hover table-bordered">
                     <tr>
-                        <td width="16%"><b>Codigo:</b></td>
-                        <td width="34%"><?= $model->alm_codigo ?></td>
-                        <td width="16%"><b>Carrera:</b></td>
-                        <td width="34%"> <?= $model->almCodcar->car_nombre ?></td>
-                        <td width="16%"><b>Ciclo:</b></td>
-                        <td width="34%"> <?= $model->almCodcil->cil_nombre ?></td>
+                        <td width="25%"><b>Codigo:</b></td>
+                        <td width="25%"><?= "AL-".$model->alm_codigo ?></td>
+                        <td width="25%"><b>Carrera:</b></td>
+                        <td width="25%"> <?= $model->almCodcar->car_nombre ?></td>
                     </tr>
                     <tr>
-                        <td ><b>Nombre:</b></td>
-                        <td ><?= $model->alm_nombres ?></td>
-                        <td ><b>Apellido:</b></td>
-                        <td > <?= $model->alm_apellidos ?></td>
-                        <td ><b>Año:</b></td>
-                        <td > <?= $model->alm_anio ?></td>
+                        <td><b>Nombre:</b></td>
+                        <td><?= $model->alm_nombres ?></td>
+                        <td><b>Apellido:</b></td>
+                        <td> <?= $model->alm_apellidos ?></td>
                     </tr>
-                    <tr> 
+                    <tr>
                         <td><b>Telefono:</b></td>
-                        <td ><?= $model->alm_telefono ?></td>
-                        <td ><b>Email:</b></td>
-                        <td><?= '<a href="mailto:'.$model->alm_email.'">'.$model->alm_email . '</a>' ?></td>                    </tr>
+                        <td><?= $model->alm_telefono ?></td>
+                        <td><b>Carnet:</b></td>
+                        <td> <?= $model->alm_carnet ?></td>
                     <tr>
-                        <td ><b>Direccion:</b></td>
-                        <td > <?= $model->alm_direccion ?></td>
+                        <td><b>Direccion:</b></td>
+                        <td> <?= $model->alm_direccion ?></td>
+                        <td><b>Email:</b></td>
+                        <td><?= '<a href="mailto:' . $model->alm_email . '">' . $model->alm_email . '</a>' ?></td>
                     </tr>
                     <tr>
                         <td><b>Fecha creacion:</b></td>
                         <td><?= date('d-m-Y H:i:m', strtotime($model->alm_fecha_ing)) ?></td>
                         <td><b>Fecha modificacion:</b></td>
                         <td><?= date('d-m-Y H:i:m', strtotime($model->alm_fecha_mod)) ?></td>
-                        <td width="16%"><b>Usuario:</b></td>
-                        <td width="34%"> <?= $model->alm_codusr ?></td>
+                    </tr>
+                    <tr>
+                        <td><b>Usuario:</b></td>
+                        <td> <?= $model->alm_codusr ?></td>
+                        <td><b>Año:</b></td>
+                        <td> <?= $model->alm_anio ?></td>
                     </tr>
                 </table>
             </div>
             <div class="card-footer">
-                    <?php echo Html::a('<i class="fa fa-edit"></i> Editar', ['update', 'alm_codigo' => $model->alm_codigo], ['class' => 'btn btn-primary', 'data-toggle' => 'tooltip', 'title' => 'Edit record']) ?>
+                <?php echo Html::a('<i class="fa fa-edit"></i> Editar', ['update', 'alm_codigo' => $model->alm_codigo], ['class' => 'btn btn-primary', 'data-toggle' => 'tooltip', 'title' => 'Edit record']) ?>
                 <?php echo Html::a('<i class="fa fa-ban"></i> Cancelar', ['index'], ['class' => 'btn btn-danger', 'data-toggle' => 'tooltip', 'title' => 'Cancelar']) ?>
             </div>
         </div>

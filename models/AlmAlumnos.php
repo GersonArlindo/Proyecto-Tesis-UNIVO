@@ -9,7 +9,7 @@ use Yii;
  *
  * @property int $alm_codigo
  * @property int $alm_codcar
- * @property int $alm_codcil
+ * @property int $alm_codgrp
  * @property string|null $alm_carnet
  * @property string|null $alm_nombres
  * @property string|null $alm_apellidos
@@ -22,8 +22,7 @@ use Yii;
  * @property int $alm_codusr
  *
  * @property CarCarrera $almCodcar
- * @property CilCiclo $almCodcil
- * @property GruGrupos[] $gruGrupos
+ * @property Grupo $almCodgrp
  */
 class AlmAlumnos extends \yii\db\ActiveRecord
 {
@@ -41,8 +40,8 @@ class AlmAlumnos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['alm_codigo', 'alm_codcar', 'alm_codcil', 'alm_telefono', 'alm_email', 'alm_direccion', 'alm_fecha_ing', 'alm_fecha_mod', 'alm_codusr'], 'required'],
-            [['alm_codigo', 'alm_codcar', 'alm_codcil', 'alm_anio', 'alm_codusr'], 'integer'],
+            [['alm_codigo', 'alm_codcar', 'alm_codgrp', 'alm_telefono', 'alm_email', 'alm_direccion', 'alm_fecha_ing', 'alm_fecha_mod', 'alm_codusr'], 'required'],
+            [['alm_codigo', 'alm_codcar', 'alm_codgrp', 'alm_anio', 'alm_codusr'], 'integer'],
             [['alm_fecha_ing', 'alm_fecha_mod'], 'safe'],
             [['alm_carnet'], 'string', 'max' => 12],
             [['alm_nombres', 'alm_apellidos'], 'string', 'max' => 250],
@@ -51,7 +50,7 @@ class AlmAlumnos extends \yii\db\ActiveRecord
             [['alm_direccion'], 'string', 'max' => 255],
             [['alm_codigo'], 'unique'],
             [['alm_codcar'], 'exist', 'skipOnError' => true, 'targetClass' => CarCarrera::class, 'targetAttribute' => ['alm_codcar' => 'car_codigo']],
-            [['alm_codcil'], 'exist', 'skipOnError' => true, 'targetClass' => CilCiclo::class, 'targetAttribute' => ['alm_codcil' => 'cil_codigo']],
+            [['alm_codgrp'], 'exist', 'skipOnError' => true, 'targetClass' => Grupo::class, 'targetAttribute' => ['alm_codgrp' => 'grp_codigo']],
         ];
     }
 
@@ -63,16 +62,16 @@ class AlmAlumnos extends \yii\db\ActiveRecord
         return [
             'alm_codigo' => 'Codigo',
             'alm_codcar' => 'Carrera',
-            'alm_codcil' => 'Ciclo',
+            'alm_codgrp' => 'Grupo',
             'alm_carnet' => 'Carnet',
-            'alm_nombres' => 'Nombres',
-            'alm_apellidos' => 'Apellidos',
+            'alm_nombres' => 'Nombre',
+            'alm_apellidos' => 'Apellido',
             'alm_anio' => 'Año',
             'alm_telefono' => 'Telefono',
-            'alm_email' => 'Correo',
+            'alm_email' => 'Email',
             'alm_direccion' => 'Direccion',
-            'alm_fecha_ing' => 'Alm Fecha Ing',
-            'alm_fecha_mod' => 'Alm Fecha Mod',
+            'alm_fecha_ing' => 'Fecha Ingreso',
+            'alm_fecha_mod' => 'Fecha Modificacion',
             'alm_codusr' => 'Usuario',
         ];
     }
@@ -88,22 +87,12 @@ class AlmAlumnos extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[AlmCodcil]].
+     * Gets query for [[AlmCodgrp]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getAlmCodcil()
+    public function getAlmCodgrp()
     {
-        return $this->hasOne(CilCiclo::class, ['cil_codigo' => 'alm_codcil']);
-    }
-
-    /**
-     * Gets query for [[GruGrupos]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getGruGrupos()
-    {
-        return $this->hasMany(GruGrupos::class, ['gru_codalm' => 'alm_codigo']);
+        return $this->hasOne(Grupo::class, ['grp_codigo' => 'alm_codgrp']);
     }
 }

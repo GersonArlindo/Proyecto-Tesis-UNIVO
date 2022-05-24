@@ -17,8 +17,7 @@ class AlumnosSearch extends AlmAlumnos
     public function rules()
     {
         return [
-            [['alm_codigo', 'alm_codcar', 'alm_codcil', 'alm_anio', 'alm_codusr'], 'integer'],
-            [['alm_carnet', 'alm_nombres', 'alm_apellidos', 'alm_telefono', 'alm_email', 'alm_direccion', 'alm_fecha_ing', 'alm_fecha_mod'], 'safe'],
+            [['alm_carnet', 'alm_codgrp', 'alm_nombres', 'alm_apellidos', 'alm_telefono', 'alm_email', 'alm_direccion', 'alm_fecha_ing', 'alm_fecha_mod'], 'safe'],
         ];
     }
 
@@ -60,7 +59,7 @@ class AlumnosSearch extends AlmAlumnos
         $query->andFilterWhere([
             'alm_codigo' => $this->alm_codigo,
             'alm_codcar' => $this->alm_codcar,
-            'alm_codcil' => $this->alm_codcil,
+            'alm_codgrp' => $this->alm_codgrp,
             'alm_anio' => $this->alm_anio,
             'alm_fecha_ing' => $this->alm_fecha_ing,
             'alm_fecha_mod' => $this->alm_fecha_mod,

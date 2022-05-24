@@ -42,16 +42,6 @@ use yii\helpers\Html;
                             <?= $form->field($model, 'ase_especialidad', ['showLabels' => false])->textInput(['autofocus' => true]) ?>
                         </div>
                         <div class="col-md-2">
-                            <?= Html::activeLabel($model, 'ase_anio', ['class' => 'control-label']) ?>
-                            <?= $form->field($model, 'ase_anio', ['showLabels' => false])->textInput(['autofocus' => true]) ?>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <?= Html::activeLabel($model, 'ase_carnet', ['class' => 'control-label']) ?>
-                            <?= $form->field($model, 'ase_carnet', ['showLabels' => false])->textInput(['autofocus' => true]) ?>
-                        </div>
-                        <div class="col-md-6">
                             <?= Html::activeLabel($model, 'ase_telefono', ['class' => 'control-label']) ?>
                             <?= $form->field($model, 'ase_telefono', ['showLabels' => false])->textInput(['autofocus' => true]) ?>
                         </div>

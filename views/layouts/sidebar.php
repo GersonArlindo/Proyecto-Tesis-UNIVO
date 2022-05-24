@@ -190,7 +190,7 @@ use yii\helpers\Url;
                 <!------- FIN MENU USUARIOS ------->
 
                 <!------- GRUPOS DE TESIS ------->
-                <?php if (Yii::$app->controller->id == 'grupoTesis' && in_array(\Yii::$app->controller->action->id, ['index'])) {
+                <?php if (Yii::$app->controller->id == 'grupo' && in_array(\Yii::$app->controller->action->id, ['index'])) {
                     $li = "nav-item active";
                     $a = "nav-link active";
                 } else {
@@ -198,7 +198,7 @@ use yii\helpers\Url;
                     $a = "nav-link";
                 }
                 ?>
-                <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/grupoTesis/index']); ?>"><i class="nav-icon fa fa-users"></i>
+                <li class="<?= $li; ?>"><a class="<?= $a; ?>" href="<?php echo Url::toRoute(['/grupo/index']); ?>"><i class="nav-icon fa fa-users"></i>
                         <p>Grupo de tesis</p>
                     </a></li>
                 <!------- END GRUPOS DE TESIS ------->

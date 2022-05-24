@@ -1,42 +1,56 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Grupo */
-
-$this->title = $model->grp_codigo;
-$this->params['breadcrumbs'][] = ['label' => 'Grupos', 'url' => ['index']];
+Yii::$app->formatter->locale = 'en-US';
+$this->title = 'Detalle';
+$this->params['breadcrumbs'][] = ['label' => 'Listado', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
 ?>
-<div class="grupo-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title"><?= "GRP-". $model->grp_codigo ?></h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm table-striped table-hover table-bordered">
+                    <tr>
+                        <td width="25%"><b>Codigo:</b></td>
+                        <td width="25%"><?= "GRP-" . $model->grp_codigo ?></td>
+                        <td width="25%"><b>Carrera:</b></td>
+                        <td width="25%"> <?= $model->grpCodcar->car_nombre ?></td>
+                    </tr>
+                    <tr>
+                        <td><b>Tema:</b></td>
+                        <td colspan="3"><?= $model->grp_tema ?></td>
+                    </tr>
+                    <tr>
+                        <td><b>Tipo de Investigacion:</b></td>
+                        <td><?= $model->grpTipo->tin_nombre ?></td>
+                        <td><b>Estado:</b></td>
+                        <td> <?= $model->grp_estado ?></td>
+                    </tr>
+                    <tr>
+                        <td><b>Fecha creacion:</b></td>
+                        <td><?= date('d-m-Y H:i:m', strtotime($model->grp_fecha_ing)) ?></td>
+                        <td><b>Fecha modificacion:</b></td>
+                        <td><?= date('d-m-Y H:i:m', strtotime($model->grp_fecha_mod)) ?></td>
+                    </tr>
 
-    <p>
-        <?= Html::a('Update', ['update', 'grp_codigo' => $model->grp_codigo], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'grp_codigo' => $model->grp_codigo], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'grp_codigo',
-            'grp_codcar',
-            'grp_tema',
-            'grp_tipo',
-            'grp_estado',
-            'grp_fecha_ing',
-            'grp_fecha_mod',
-        ],
-    ]) ?>
-
+                </table>
+            </div>
+            <div class="card-footer">
+                <?php echo Html::a('<i class="fa fa-edit"></i> Editar', ['update', 'grp_codigo' => $model->grp_codigo], ['class' => 'btn btn-primary', 'data-toggle' => 'tooltip', 'title' => 'Edit record']) ?>
+                <?php echo Html::a('<i class="fa fa-ban"></i> Cancelar', ['index'], ['class' => 'btn btn-danger', 'data-toggle' => 'tooltip', 'title' => 'Cancelar']) ?>
+            </div>
+        </div>
+    </div>
 </div>
+
+<?= $this->render('_gridEstudiantes', [
+    'model' => $model,
+    'searchModel' => $searchModel,
+    'dataProvider' => $dataProvider,
+]) ?>
